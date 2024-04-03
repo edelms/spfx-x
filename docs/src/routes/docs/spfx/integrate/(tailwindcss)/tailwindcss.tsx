@@ -7,7 +7,7 @@ export default function Layout(props: RouteSectionProps) {
     return (
         <>
             <MetaTitle short="SPFx ╳ tailwindcss" text="How to integrate Tailwind into a SharePoint Framework (SPFx) project" />
-            <MetaDescription text="This documentation provides a step-by-step guidance how to integrate tailwindcss, a utility-first CSS framework, into a SharePoint Framework project." />
+            <MetaDescription text="This documentation provides a step-by-step tutorial how to integrate tailwindcss, a utility-first CSS framework, into a SharePoint Framework project." />
 
             <div class="flex items-start justify-between">
                 <ArticleNavigation links={[

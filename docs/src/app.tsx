@@ -1,7 +1,8 @@
 import { Suspense, createEffect, on } from "solid-js";
 import { Router, useLocation } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { MetaProvider } from "@solidjs/meta";
+// import { MetaProvider } from "@solidjs/meta";
+import { MetaProvider } from "./components/TemporarySolidMeta";
 import { MainNavigation } from "./components/MainNavigation";
 import { RouteMetaProvider } from "./context/RouteMeta";
 

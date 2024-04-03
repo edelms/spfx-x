@@ -8,7 +8,7 @@ export default function Layout(props: RouteSectionProps) {
     return (
         <>
             <MetaTitle short="SPFx ╳ SolidJS" text="How to integrate SolidJS into a SharePoint Framework (SPFx) project" />
-            <MetaDescription text="This documentation provides a step-by-step guidance how to integrate SolidJS, a modern fast and lightweight frontend library, into a SharePoint Framework project." />
+            <MetaDescription text="This documentation provides a step-by-step tutorial how to integrate SolidJS, a modern fast and lightweight frontend library, into a SharePoint Framework project." />
 
             <div class="flex items-start justify-between">
                 <ArticleNavigation links={[

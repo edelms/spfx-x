@@ -1,4 +1,5 @@
-import { Meta, Title } from "@solidjs/meta";
+// import { Meta, Title } from "@solidjs/meta";
+import { Meta, Title } from "./TemporarySolidMeta";
 import { useRouteMeta } from "../context/RouteMeta";
 
 type Props = {

@@ -1,0 +1,163 @@
+---
+title: Prepare your stylesheets
+prev: 01-build-pipeline
+next: 03-testing
+---
+
+# 2. Prepare your stylesheets
+
+- Create an `assets` folder in the root of the SPFx project.
+
+---
+
+## Create the `main.css`
+This is the main stylesheet for our project. Tailwind will use this file as an entrypoint, and you can also place custom utility classes here.
+
+- Create a `main.css` file, and place it in the `assets` folder.
+
+```css showLineNumbers title="main.css"
+@import './scoped-preflight.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+
+## Create the `scoped-preflight.css`
+Tailwind CSS requires a preflight stylesheet to set base styles and normalize browser defaults.
+These base styles aim to provide a consistent starting point for building upon.
+To not influence SharePoint's global stylesheets we create a modified version.
+
+### Use my modified version
+This step requires multiple modifications, you can download my modified version to save some time and skip the rest of this page.
+
+- <a href="/assets/files/scoped-preflight.css" download="scoped-preflight.css">Modified preflight.css</a>\
+    __Note: this file was created for Tailwind CSS version 3.4.3.__
+
+- Name this file `scoped-preflight.css`, and place it in the `assets` folder in your SPFx project.
+
+
+
+### Create your own
+If you want to create your own, download the official preflight stylesheet from Tailwind's GitHub repository:\
+<a href="https://github.com/tailwindlabs/tailwindcss/blob/master/src/css/preflight.css" target="_blank">Original preflight.css</a>
+
+- Name this file `scoped-preflight.css`, and place it in the `assets` folder in your SPFx project.
+
+#### Remove global element styles
+
+When working with SharePoint we usually won't have control over the entire HTML page.
+You can remove all definitions for global elements, like `body`, `html` and `:host`
+- __Note: lines to remove are highlighted__
+
+```css showLineNumbers {15-25,27-30} title="scoped-preflight.css (excerpt; comments removed for readability)"
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: theme('borderColor.DEFAULT', currentColor);
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+html,
+:host {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+  font-feature-settings: theme('fontFamily.sans[1].fontFeatureSettings', normal);
+  font-variation-settings: theme('fontFamily.sans[1].fontVariationSettings', normal);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+}
+
+hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+/*...*/
+```
+
+#### Modify selectors
+
+We modify the preflight to only work within specific sections in the document.
+
+You can choose between 2 variants:
+- Pick variant A if you have to support older browsers.
+- Pick variant B if you only care about newer browsers.
+    - This reduces the bundle size a bit.
+    - Check browser compatibility here: [Can I use - CSS Nesting](https://caniuse.com/css-nesting)
+    - This works with newer Tailwind versions only (3.4.2 and up).
+
+##### Variant A - classic css
+
+- Place a `:where(#tw) ` in front of __EACH__ selector.\
+    In my case, the final file should have 82 instances of this prefix.
+
+```css showLineNumbers ":where(#tw) " title="scoped-preflight.css (excerpt; comments removed for readability)"
+:where(#tw) *,
+:where(#tw) ::before,
+:where(#tw) ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: theme('borderColor.DEFAULT', currentColor);
+}
+
+:where(#tw) ::before,
+:where(#tw) ::after {
+  --tw-content: '';
+}
+
+:where(#tw) hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+/*...*/
+```
+
+
+##### Variant B - nested css
+
+- Wrap the entire content in a `:where(#tw) { ... }` block.
+
+```scss showLineNumbers {1,22} title="scoped-preflight.css (excerpt; comments removed for readability)"
+:where(#tw) {   
+    *,
+    ::before,
+    ::after {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        border-color: theme('borderColor.DEFAULT', currentColor);
+    }
+
+    ::before,
+    ::after {
+        --tw-content: '';
+    }
+
+    hr {
+        height: 0;
+        color: inherit;
+        border-top-width: 1px;
+    }
+    /*...*/
+}
+```

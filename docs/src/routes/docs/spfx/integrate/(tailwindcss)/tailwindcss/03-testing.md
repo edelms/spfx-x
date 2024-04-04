@@ -1,0 +1,55 @@
+---
+title: Testing
+prev: 02-prepare-stylesheets
+---
+
+# 3. Testing
+
+## Modify the WebPart class
+
+- Navigate to the folder `src\webparts\tailwindDemo`, open `TailwindDemoWebPart.ts`
+
+### Replace the stylesheet
+- Remove the styles import\
+    `import styles from './TailwindDemoWebPart.module.scss';`
+- Add the import to the `main.css` file\
+    `import '../../../assets/dist/main.css';`
+- Remove the file `TailwindDemoWebPart.module.scss`
+
+### Display some content
+Replace the content in the `render()` method to show something.
+
+__Note: Depending on the framework, your render method could work differently.__\
+__If you are using React or SolidJS, you can use the classes in your components.__\
+__The important piece is setting the element ID, to enable Tailwind.__
+
+
+Your final WebPart class should look like this:
+
+```tsx showLineNumbers {4,11-15} "this.domElement.id" title="TailwindDemoWebPart.ts"
+import { Version } from '@microsoft/sp-core-library';
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+
+import '../../../assets/dist/main.css';
+
+export interface ITailwindDemoWebPartProps {
+}
+
+export default class TailwindDemoWebPart extends BaseClientSideWebPart<ITailwindDemoWebPartProps> {
+    public render(): void {
+        this.domElement.id = "tw";
+        this.domElement.innerHTML = `
+            <div class="inline-block px-4 py-2 text-xl text-sky-900 border border-sky-200 rounded-lg">
+                Hello Tailwind
+            </div>`;
+    }
+    ...
+}
+```
+
+## Test with SharePoint
+
+- Start the dev server and add the webpart to a dev page.
+- If you need more information, follow [this guide](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/debug-modern-pages#debug-sharepoint-framework-web-parts-on-modern-sharepoint-pages).
+
+    ![webpart](/assets/images/tailwind-demo-webpart-in-page.png)

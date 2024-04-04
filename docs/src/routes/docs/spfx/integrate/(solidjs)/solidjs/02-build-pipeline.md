@@ -1,0 +1,123 @@
+---
+title: Extend the SPFx build pipeline
+prev: 01-setup-project
+next: 03-solidjs-component
+---
+
+# 2. Extend the SPFx build pipeline
+
+We have to customize the existing build process provided by SharePoint Framework to incorporate a SolidJS-specific compilation of JSX files.
+
+---
+
+## Extend the `gulpfile.js`
+
+SharePoint Framework uses a Gulp-based build system. The `gulpfile.js` in the root of the project serves as the backbone of the build process, orchestrating various tasks to compile, bundle, and package the solution for deployment.
+
+
+### Add a `build.configureWebpack.mergeConfig`
+This is an entrypoint provided by SPFx. This function allows us to merge custom configuration 
+into the out-of-box webpack configuration during the build process.
+For a new project this function needs to be added.
+
+- Add the highlighted code section.\
+    Note: you can only have one of these in the gulpfile!
+
+```js {4-9} showLineNumbers{4} title="gulpfile.js"
+...
+build.addSuppression(`Warning - [sass] The local CSS ...`);
+
+build.configureWebpack.mergeConfig({
+    additionalConfiguration: (generatedConfiguration) => {
+        // your configuration here
+        return generatedConfiguration;
+    }
+});
+
+var getTasks = build.rig.getTasks;
+...
+```
+
+### Add a webpack loader to transpile JavaScript files
+The neccessary libraries to compile JSX are exposed as babel plugins. We need to use `babel-loader` to transpile JavaScript files using the Babel JavaScript compiler.\
+Add the highlighted lines to the `mergeConfig` function you added already, before the return statement.
+
+```js {5-21} showLineNumbers title="gulpfile.js"
+...
+build.configureWebpack.mergeConfig({
+    additionalConfiguration: (generatedConfiguration) => {
+        ...
+        // Compile jsx
+        generatedConfiguration.module.rules.push(
+            {
+                test: /\.(js|jsx)$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            babelrc: false,
+                            configFile: false,
+                            sourceMaps: true,
+                            presets: ["@babel/preset-env", 'solid', "@babel/preset-typescript"],
+                        }
+                    }
+                ]
+            }
+        );
+        ...
+        return generatedConfiguration;
+    }
+});
+...
+```
+
+### Extend the source-map generation
+By default the build process generates source-maps only for `*.js` files. To simplify debugging, we add `*.jsx` to the `source-map-loader` provided by SPFx.\
+Add the highlighted lines to the `mergeConfig` function you added already, before the return statement.
+
+```js {5-9} showLineNumbers title="gulpfile.js"
+...
+build.configureWebpack.mergeConfig({
+    additionalConfiguration: (generatedConfiguration) => {
+        ...
+        // Extend source map loader for jsx files
+        const sourcemapLoader = generatedConfiguration.module.rules.find(r => r.use.indexOf?.('source-map-loader') >= 0);
+        if (sourcemapLoader) {
+            sourcemapLoader.test = /\.(js|jsx)$/;
+        }
+        ...
+        return generatedConfiguration;
+    }
+});
+...
+```
+
+The final `mergeConfig` should contain both sections from above.
+
+---
+
+## Update the `tsconfig.json`
+The `tsconfig.json` file in the root of the project is a configuration file for the TypeScript compiler. The default configuration is optimized for React, this needs to be changed.
+
+Within the `compilerOptions`:
+- change the property `jsx` to `preserve`
+- add a `jsxImportSource` property, with the value `solid-js`
+
+
+```json {8-9} showLineNumbers{8} title="tsconfig.json"
+{
+    "extends": "./node_modules/@microsoft/rush-stack-compiler-4.7/includes/tsconfig-web.json",
+    "compilerOptions": {
+        "target": "es5",
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "declaration": true,
+        "sourceMap": true,
+        ...
+    },
+    ...
+}
+```

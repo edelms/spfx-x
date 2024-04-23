@@ -21,6 +21,7 @@
         "remark-heading-id": "^1.0.1",
         "remark-mdx-frontmatter": "^4.0.0",
         "remark-mdx-toc": "^0.3.1",
+        "sitemap": "^7.1.1",
         "solid-icons": "^1.1.0",
         "solid-js": "^1.8.15",
         "solid-mdx": "^0.0.7",

@@ -14,7 +14,6 @@ export async function GET() {
     sitemap.end();
 
     const buffer = await streamToPromise(sitemap);
-    console.log(buffer);
 
     const headers: Headers = new Headers();
     headers.append('Content-Type', 'text/xml');

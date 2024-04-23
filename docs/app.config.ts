@@ -16,8 +16,8 @@ export default defineConfig({
     server: {
         preset: 'static',
         prerender: {
-            routes: ['/sitemap.xml']
-        }
+            routes: ['/', '/sitemap.xml']
+        },
     },
     vite: {
         plugins: [

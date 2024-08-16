@@ -51,7 +51,14 @@ If you want to create your own, download the official preflight stylesheet from 
 
 When working with SharePoint we usually won't have control over the entire HTML page.
 You can remove all definitions for global elements, like `body`, `html` and `:host`
-- __Note: lines to remove are highlighted__
+
+import {Note} from '~/components/Note';
+
+<Note>
+    Note: lines to remove are highlighted
+</Note>
+
+
 
 ```css showLineNumbers {15-25,27-30} title="scoped-preflight.css (excerpt; comments removed for readability)"
 *,

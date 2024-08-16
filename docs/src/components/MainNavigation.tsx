@@ -90,7 +90,7 @@ const NavLink = (props: Link) => {
             <li>
                 <A href={props.href} class="flex gap-2 items-center p-2 rounded-md hover:bg-neutral-700/30 hover:backdrop-blur-[1px] hover:text-gray-400">
                     <img src={props.iconUrl} class={props.iconClass} />
-                    <span>{props.label}</span>
+                    <span class="hidden sm:inline">{props.label}</span>
                 </A>
             </li>
         </Show>

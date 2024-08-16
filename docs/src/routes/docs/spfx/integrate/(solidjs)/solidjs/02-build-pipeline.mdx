@@ -4,6 +4,8 @@ prev: 01-setup-project
 next: 03-solidjs-component
 ---
 
+import {Note} from '~/components/Note';
+
 # 2. Extend the SPFx build pipeline
 
 We have to customize the existing build process provided by SharePoint Framework to incorporate a SolidJS-specific compilation of JSX files.
@@ -20,8 +22,11 @@ This is an entrypoint provided by SPFx. This function allows us to merge custom 
 into the out-of-box webpack configuration during the build process.
 For a new project this function needs to be added.
 
-- Add the highlighted code section.\
+- Add the highlighted code section.
+
+<Note>
     Note: you can only have one of these in the gulpfile!
+</Note>
 
 ```js {4-9} showLineNumbers{4} title="gulpfile.js"
 ...
@@ -72,6 +77,11 @@ build.configureWebpack.mergeConfig({
 ```
 
 ### Extend the source-map generation
+
+<Note>
+    Note: Skip this step for SPFx 1.19+
+</Note>
+
 By default the build process generates source-maps only for `*.js` files. To simplify debugging, we add `*.jsx` to the `source-map-loader` provided by SPFx.\
 Add the highlighted lines to the `mergeConfig` function you added already, before the return statement.
 

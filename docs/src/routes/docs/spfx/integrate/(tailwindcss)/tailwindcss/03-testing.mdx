@@ -19,10 +19,13 @@ prev: 02-prepare-stylesheets
 ### Display some content
 Replace the content in the `render()` method to show something.
 
-__Note: Depending on the framework, your render method could work differently.__\
-__If you are using React or SolidJS, you can use the classes in your components.__\
-__The important piece is setting the element ID, to enable Tailwind.__
+import {Note} from '~/components/Note';
 
+<Note>
+    Note: Depending on the framework, your render method could work differently.<br />
+    If you are using React or SolidJS, you can use the classes in your components.<br />
+    The important piece is setting the element ID, to enable Tailwind.
+</Note>
 
 Your final WebPart class should look like this:
 

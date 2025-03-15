@@ -1,9 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
-
-html, body {
+html,
+body {
     background-color: #222;
     color: white;
 
@@ -12,7 +12,7 @@ html, body {
 }
 
 .primary-button {
-    @apply border border-emerald-700 bg-emerald-700/10 hover:bg-emerald-700/20 hover:shadow-emerald-300/10 hover:shadow-sm;
+    @apply border border-emerald-700 bg-emerald-700/10 hover:bg-emerald-700/20 hover:shadow-emerald-300/10 hover:shadow-xs;
 }
 
 .subheading-anchor {
@@ -54,4 +54,3 @@ html, body {
 [data-rehype-pretty-code-figure] [data-chars-id] {
     @apply border-b-2 p-1 shadow-none;
 }
-

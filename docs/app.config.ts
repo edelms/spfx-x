@@ -1,4 +1,6 @@
 import { defineConfig } from "@solidjs/start/config";
+import tailwindcss from "@tailwindcss/vite";
+
 /* @ts-ignore */
 import pkg from "@vinxi/plugin-mdx";
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -21,6 +23,7 @@ export default defineConfig({
     },
     vite: {
         plugins: [
+            tailwindcss(),
             mdx.withImports({})({
                 jsx: true,
                 jsxImportSource: "solid-js",

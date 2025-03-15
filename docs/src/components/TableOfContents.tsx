@@ -1,6 +1,6 @@
-import { A } from "@solidjs/router";
 import { For, Show } from "solid-js";
-import { RouteTOCNode, useRouteMeta } from "~/context/RouteMeta";
+import { useRouteMeta } from "~/context/RouteMeta";
+import { RouteTOCNode } from "~/helpers/get-routes";
 
 type Props = {
     onClick?(node: RouteTOCNode): void;

@@ -1,9 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
-
-html, body {
+html,
+body {
     background-color: #222;
     color: white;
 
@@ -54,4 +54,3 @@ html, body {
 [data-rehype-pretty-code-figure] [data-chars-id] {
     @apply border-b-2 p-1 shadow-none;
 }
-

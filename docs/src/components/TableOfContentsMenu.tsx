@@ -8,7 +8,7 @@ export const TableOfContentsMenu = () => {
     const [open, setOpen] = createSignal(false);
 
     return (
-        <Popover.Root modal={true} open={open()} onOpenChange={setOpen}>
+        <Popover.Root modal={true} open={open()} onOpenChange={setOpen} preventScroll={false}>
             <Popover.Trigger title="Open table of contents"
                 class="p-1 text-emerald-500 border border-neutral-700 rounded-xl hover:bg-neutral-800 transition-all"
             >

@@ -12,7 +12,7 @@ body {
 }
 
 .primary-button {
-    @apply border border-emerald-700 bg-emerald-700/10 hover:bg-emerald-700/20 hover:shadow-emerald-300/10 hover:shadow-sm;
+    @apply border border-emerald-700 bg-emerald-700/10 hover:bg-emerald-700/20 hover:shadow-emerald-300/10 hover:shadow-xs;
 }
 
 .subheading-anchor {
